@@ -1,5 +1,100 @@
 # Change Log
 
+## [v2.2.4](https://github.com/auth0/auth0-react/tree/v2.2.4) (2023-12-11)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.2.3...v2.2.4)
+
+**Changed**
+- Update Auth0-SPA-JS to latest version [\#690](https://github.com/auth0/auth0-react/pull/690) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.2.3](https://github.com/auth0/auth0-react/tree/v2.2.3) (2023-11-02)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.2.2...v2.2.3)
+
+**Fixed**
+- Revert "Make OAuthError extend GenericError" [\#646](https://github.com/auth0/auth0-react/pull/646) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.2.2](https://github.com/auth0/auth0-react/tree/v2.2.2) (2023-10-31)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.2.1...v2.2.2)
+
+**Fixed**
+- Export all errors from SPA-JS [\#637](https://github.com/auth0/auth0-react/pull/637) ([frederikprijck](https://github.com/frederikprijck))
+
+**Changed**
+- Make OAuthError extend GenericError [\#638](https://github.com/auth0/auth0-react/pull/638) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.2.1](https://github.com/auth0/auth0-react/tree/v2.2.1) (2023-08-22)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.2.0...v2.2.1)
+
+**Fixed**
+- bump auth0-spa-js to latest version [\#560](https://github.com/auth0/auth0-react/pull/560) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.2.0](https://github.com/auth0/auth0-react/tree/v2.2.0) (2023-07-13)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.1.1...v2.2.0)
+
+**Added**
+- Support Organization Name [\#552](https://github.com/auth0/auth0-react/pull/552) ([frederikprijck](https://github.com/frederikprijck))
+
+**Fixed**
+- Fix incorrect logout jsdocx example [\#551](https://github.com/auth0/auth0-react/pull/551) ([frederikprijck](https://github.com/frederikprijck))
+- Fix inconsistent logout function types [\#548](https://github.com/auth0/auth0-react/pull/548) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.1.1](https://github.com/auth0/auth0-react/tree/v2.1.1) (2023-06-14)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.1.0...v2.1.1)
+
+**Changed**
+- bump SPA-JS to the latest version [\#543](https://github.com/auth0/auth0-react/pull/543) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.1.0](https://github.com/auth0/auth0-react/tree/v2.1.0) (2023-05-05)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.0.2...v2.1.0)
+
+**Added**
+- Adding onBeforeAuthentication to the withAuthenticationRequired HOC [\#534](https://github.com/auth0/auth0-react/pull/534) ([stephenkelzer](https://github.com/stephenkelzer))
+
+## [v2.0.2](https://github.com/auth0/auth0-react/tree/v2.0.2) (2023-04-26)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.0.1...v2.0.2)
+
+**Fixed**
+- Remove useUnknownInCatchVariables to be compliant with TS ^4.4 [\#511](https://github.com/auth0/auth0-react/pull/511) ([cemercier](https://github.com/cemercier))
+
+## [v2.0.1](https://github.com/auth0/auth0-react/tree/v2.0.1) (2023-02-22)
+[Full Changelog](https://github.com/auth0/auth0-react/compare/v2.0.0...v2.0.1)
+
+**Fixed**
+- Support redirectUri again in a deprecated way [\#507](https://github.com/auth0/auth0-react/pull/507) ([frederikprijck](https://github.com/frederikprijck))
+
+## [v2.0.0](https://github.com/auth0/auth0-react/tree/v2.0.0) (2023-01-19)
+
+Auth0-React v2 includes many significant changes compared to v1:
+
+- Removal of polyfills from bundles
+- Introduction of `authorizationParams` and `logoutParams` for properties sent to Auth0
+- Removal of `buildAuthorizeUrl` and `buildLogoutUrl`
+- Removal of `redirectMethod` on `loginWithRedirect` in favour of `openUrl`
+- Removal of `localOnly` from `logout` in favour of `openUrl`
+- Renaming of `ignoreCache` to `cacheMode` and introduction of `cache-only`
+- Use `application/x-www-form-urlencoded` by default
+- Do not fallback to refreshing tokens via iframe by default
+- Changes to default scopes and removal of `advancedOptions.defaultScope`
+- Removal of `claimCheck` on `withAuthenticationRequired`
+
+As with any major version bump, v2 of Auth0-React contains a set of breaking changes. **Please review [the migration guide](./MIGRATION_GUIDE.md) thoroughly to understand the changes required to migrate your application to v2.**
+
+## [v2.0.0-beta.0](https://github.com/auth0/auth0-react/tree/v2.0.0-beta.0) (2022-12-12)
+
+Auth0-React v2 includes many significant changes compared to v1:
+
+- Removal of polyfills from bundles
+- Introduction of `authorizationParams` and `logoutParams` for properties sent to Auth0
+- Removal of `buildAuthorizeUrl` and `buildLogoutUrl`
+- Removal of `redirectMethod` on `loginWithRedirect` in favour of `openUrl`
+- Removal of `localOnly` from `logout` in favour of `openUrl`
+- Renaming of `ignoreCache` to `cacheMode` and introduction of `cache-only`
+- Use `application/x-www-form-urlencoded` by default
+- Do not fallback to refreshing tokens via iframe by default
+- Changes to default scopes and removal of `advancedOptions.defaultScope`
+- Removal of `claimCheck` on `withAuthenticationRequired`
+
+As with any major version bump, v2 of Auth0-React contains a set of breaking changes. **Please review [the migration guide](./MIGRATION_GUIDE.md) thoroughly to understand the changes required to migrate your application to v2.**
+
 ## [v1.12.1](https://github.com/auth0/auth0-react/tree/v1.12.1) (2023-01-12)
 [Full Changelog](https://github.com/auth0/auth0-react/compare/v1.12.0...v1.12.1)
 

@@ -1,12 +1,19 @@
 import React, { ComponentType, useEffect, FC } from 'react';
-import { RedirectLoginOptions, User } from '@auth0/auth0-spa-js';
 import useAuth0 from './use-auth0';
-import Auth0Context, { Auth0ContextInterface } from './auth0-context';
+import Auth0Context, {
+  Auth0ContextInterface,
+  RedirectLoginOptions,
+} from './auth0-context';
 
 /**
  * @ignore
  */
 const defaultOnRedirecting = (): JSX.Element => <></>;
+
+/**
+* @ignore
+*/
+const defaultOnBeforeAuthentication = async (): Promise<void> => {/* noop */};
 
 /**
  * @ignore
@@ -49,6 +56,16 @@ export interface WithAuthenticationRequiredOptions {
   /**
    * ```js
    * withAuthenticationRequired(Profile, {
+   *   onBeforeAuthentication: () => { analyticsLibrary.track('login_triggered'); }
+   * })
+   * ```
+   *
+   * Allows executing logic before the user is redirected to the login page.
+   */
+  onBeforeAuthentication?: () => Promise<void>;
+  /**
+   * ```js
+   * withAuthenticationRequired(Profile, {
    *   loginOptions: {
    *     appState: {
    *       customProp: 'foo'
@@ -61,12 +78,6 @@ export interface WithAuthenticationRequiredOptions {
    * This will be merged with the `returnTo` option used by the `onRedirectCallback` handler.
    */
   loginOptions?: RedirectLoginOptions;
-  /**
-   * Check the user object for JWT claims and return a boolean indicating
-   * whether or not they are authorized to view the component.
-   */
-  claimCheck?: (claims?: User) => boolean;
-
   /**
    * The context to be used when calling useAuth0, this should only be provided if you are using multiple Auth0Providers
    * within your application and you wish to tie a specific component to a Auth0Provider other than the Auth0Provider
@@ -81,7 +92,7 @@ export interface WithAuthenticationRequiredOptions {
  * ```
  *
  * When you wrap your components in this Higher Order Component and an anonymous user visits your component
- * they will be redirected to the login page and returned to the page they we're redirected from after login.
+ * they will be redirected to the login page; after login they will be returned to the page they were redirected from.
  */
 const withAuthenticationRequired = <P extends object>(
   Component: ComponentType<P>,
@@ -91,22 +102,16 @@ const withAuthenticationRequired = <P extends object>(
     const {
       returnTo = defaultReturnTo,
       onRedirecting = defaultOnRedirecting,
-      claimCheck = (): boolean => true,
+      onBeforeAuthentication = defaultOnBeforeAuthentication,
       loginOptions,
       context = Auth0Context,
     } = options;
 
-    const { user, isAuthenticated, isLoading, loginWithRedirect } =
+    const { isAuthenticated, isLoading, loginWithRedirect } =
       useAuth0(context);
 
-    /**
-     * The route is authenticated if the user has valid auth and there are no
-     * JWT claim mismatches.
-     */
-    const routeIsAuthenticated = isAuthenticated && claimCheck(user);
-
     useEffect(() => {
-      if (isLoading || routeIsAuthenticated) {
+      if (isLoading || isAuthenticated) {
         return;
       }
       const opts = {
@@ -117,17 +122,19 @@ const withAuthenticationRequired = <P extends object>(
         },
       };
       (async (): Promise<void> => {
+        await onBeforeAuthentication();
         await loginWithRedirect(opts);
       })();
     }, [
       isLoading,
-      routeIsAuthenticated,
+      isAuthenticated,
       loginWithRedirect,
+      onBeforeAuthentication,
       loginOptions,
       returnTo,
     ]);
 
-    return routeIsAuthenticated ? <Component {...props} /> : onRedirecting();
+    return isAuthenticated ? <Component {...props} /> : onRedirecting();
   };
 };
 
